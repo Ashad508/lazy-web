@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Lazy Cloud | Global Hosting - India, Germany, Singapore</title>
+  <!-- Google Fonts & Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0c10;
+      color: #eef2ff;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: #1a1e2a; }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #3b82f6, #a855f7); border-radius: 10px; }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #60a5fa, #c084fc, #38bdf8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      border: none;
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1rem;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 8px 20px rgba(59,130,246,0.3);
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(139,92,246,0.4);
+    }
+    .btn-buy {
+      background: linear-gradient(135deg, #10b981, #059669);
+      border: none;
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1rem;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s;
+      width: 100%;
+    }
+    .btn-buy:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(16,185,129,0.4);
+    }
+
+    /* Navigation */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(10, 12, 16, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(59,130,246,0.2);
+      padding: 1rem 2rem;
+    }
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.6rem;
+      font-weight: 800;
+    }
+    .logo img {
+      height: 45px;
+      border-radius: 12px;
+    }
+    .logo span {
+      background: linear-gradient(135deg, #fff, #a855f7);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    .nav-links a {
+      color: #cbd5e6;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: #60a5fa;
+    }
+    .hamburger {
+      display: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+    @media (max-width: 1000px) {
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 70%;
+        height: calc(100vh - 70px);
+        background: #0f1119;
+        flex-direction: column;
+        padding: 2rem;
+        transition: 0.3s;
+        backdrop-filter: blur(20px);
+        z-index: 999;
+        gap: 1.5rem;
+      }
+      .nav-links.active { left: 0; }
+      .hamburger { display: block; }
+      .nav-container { flex-wrap: wrap; }
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+    .section-title {
+      font-size: 3rem;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .section-subtitle {
+      text-align: center;
+      font-size: 1.2rem;
+      color: #94a3b8;
+      margin-bottom: 3rem;
+    }
+
+    /* Global Map with Locations */
+    .global-map-container {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      border-radius: 2rem;
+      padding: 3rem;
+      text-align: center;
+      margin: 2rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .world-map-img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 1rem;
+      animation: floatMap 6s ease-in-out infinite;
+    }
+    @keyframes floatMap {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+    }
+    .location-pin {
+      position: absolute;
+      background: rgba(255, 100, 100, 0.9);
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px rgba(255, 100, 100, 0.4);
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(2); opacity: 0; }
+    }
+    .location-label {
+      position: absolute;
+      background: rgba(0,0,0,0.7);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      white-space: nowrap;
+      color: white;
+    }
+    .minecraft-steve {
+      position: absolute;
+      bottom: 20px;
+      left: 5%;
+      font-size: 4rem;
+      animation: walkSteve 14s infinite;
+      filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
+    }
+    .minecraft-creeper {
+      position: absolute;
+      bottom: 40px;
+      right: 5%;
+      font-size: 3.5rem;
+      animation: bounceCreeper 3s infinite;
+    }
+    @keyframes walkSteve {
+      0% { left: 0%; transform: scaleX(1); }
+      49% { transform: scaleX(1); }
+      50% { left: 85%; transform: scaleX(1); }
+      51% { transform: scaleX(-1); }
+      100% { left: 0%; transform: scaleX(-1); }
+    }
+    @keyframes bounceCreeper {
+      0%,100% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+    }
+
+    /* Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+    .plan-card {
+      background: linear-gradient(135deg, rgba(20, 24, 36, 0.9), rgba(15, 18, 28, 0.95));
+      backdrop-filter: blur(10px);
+      border-radius: 2rem;
+      padding: 2rem;
+      border: 1px solid rgba(59,130,246,0.3);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .plan-card:hover {
+      transform: translateY(-10px);
+      border-color: #8b5cf6;
+      box-shadow: 0 25px 45px -12px rgba(139,92,246,0.3);
+    }
+    .plan-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    .plan-name {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+    .price-rupee {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #fbbf24;
+    }
+    .price-dollar {
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .plan-specs {
+      margin: 1rem 0;
+      padding: 1rem 0;
+      border-top: 1px dashed rgba(59,130,246,0.3);
+      border-bottom: 1px dashed rgba(59,130,246,0.3);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .badge-location {
+      display: inline-block;
+      background: linear-gradient(135deg, #3b82f620, #8b5cf620);
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      margin-top: 10px;
+    }
+    .feature-tag {
+      display: inline-block;
+      background: #10b98120;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      margin-right: 6px;
+      margin-top: 8px;
+    }
+
+    /* Admin Panel */
+    .admin-panel {
+      background: linear-gradient(135deg, #11161f, #0d1117);
+      border-radius: 2rem;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border: 2px solid #f59e0b;
+    }
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .form-field {
+      flex: 1 1 200px;
+    }
+    .form-field input, .form-field select {
+      width: 100%;
+      padding: 12px;
+      background: #1a1f2e;
+      border: 1px solid #2d3748;
+      border-radius: 12px;
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    footer {
+      background: #07090e;
+      padding: 3rem 2rem;
+      text-align: center;
+      border-top: 1px solid #1e2a3a;
+    }
+    .social-icons a {
+      color: #94a3b8;
+      margin: 0 15px;
+      font-size: 1.8rem;
+      transition: 0.2s;
+    }
+    .social-icons a:hover { color: #60a5fa; transform: translateY(-3px); display: inline-block; }
+
+    .page { display: none; animation: fade 0.4s; }
+    .active-page { display: block; }
+    @keyframes fade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 768px) {
+      .container { padding: 2rem 1rem; }
+      .section-title { font-size: 2rem; }
+      .cards-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="logo">
+      <img src="https://cdn.discordapp.com/icons/1479722534122422352/bdf89b53e022859e5292f0c9b4f83dd2.webp?size=128" alt="Lazy Cloud Logo">
+      <span>Lazy Cloud</span>
+    </div>
+    <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
+    <div class="nav-links" id="navLinks">
+      <a href="#" data-page="home" class="active">🏠 Home</a>
+      <a href="#" data-page="vps">🖥️ VPS Hosting</a>
+      <a href="#" data-page="minecraft">⛏️ Minecraft Hosting</a>
+      <a href="#" data-page="dedicated">🗄️ Dedicated (VDS)</a>
+      <a href="#" data-page="bot">🤖 Bot Hosting</a>
+      <a href="#" data-page="admin">🔐 Admin Panel</a>
+    </div>
+  </div>
+</nav>
+
+<main id="app-root">
+  <!-- HOME PAGE -->
+  <div id="home-page" class="page active-page">
+    <div class="container" style="text-align: center; padding-top: 4rem;">
+      <h1 style="font-size: 4rem; font-weight: 900; margin-bottom: 1rem;">Global <span class="gradient-text">Lazy Cloud Hosting</span></h1>
+      <p style="font-size: 1.3rem; max-width: 800px; margin: 1rem auto; color: #cbd5e6;">India • Germany • Singapore • Ultra-Low Latency Worldwide</p>
+      <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+        <button class="btn-primary" id="exploreVps">Explore Plans →</button>
+        <button class="btn-outline" id="exploreMc">Minecraft Hosting</button>
+      </div>
+    </div>
+
+    <!-- Global Map with Locations -->
+    <div class="container">
+      <div class="global-map-container" data-aos="fade-up">
+        <img class="world-map-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/World_map_-_low_resolution.svg/1024px-World_map_-_low_resolution.svg.png" alt="World Map" style="width: 100%; max-width: 900px; margin: 0 auto; display: block;">
+        <!-- Location Pins -->
+        <div class="location-pin" style="top: 45%; left: 48%;"></div>
+        <div class="location-label" style="top: 42%; left: 45%;">🇮🇳 India</div>
+        <div class="location-pin" style="top: 35%; left: 55%;"></div>
+        <div class="location-label" style="top: 32%; left: 52%;">🇩🇪 Germany</div>
+        <div class="location-pin" style="top: 55%; left: 68%;"></div>
+        <div class="location-label" style="top: 52%; left: 65%;">🇸🇬 Singapore</div>
+        <div class="location-pin" style="top: 30%; left: 25%;"></div>
+        <div class="location-label" style="top: 27%; left: 22%;">🇺🇸 USA</div>
+        <div class="location-pin" style="top: 38%; left: 62%;"></div>
+        <div class="location-label" style="top: 35%; left: 59%;">🇬🇧 UK</div>
+        
+        <!-- Animated Minecraft Characters -->
+        <div class="minecraft-steve">
+          <i class="fas fa-user-astronaut"></i> ⛏️
+        </div>
+        <div class="minecraft-creeper">
+          🟢💥
+        </div>
+        <p style="margin-top: 2rem; font-size: 1rem;"><i class="fas fa-globe" style="color:#60a5fa;"></i> 10+ Global Locations • Optimized Routing • 99.99% Uptime</p>
+      </div>
+    </div>
+
+    <div class="container"><h2 class="section-title">Why <span class="gradient-text">Lazy Cloud?</span></h2>
+    <div class="cards-grid">
+      <div class="plan-card" data-aos="fade-up"><i class="fas fa-microchip" style="font-size: 3rem; color:#60a5fa;"></i><h3 class="plan-name">Intel E5 v4</h3><p>Enterprise-grade processors with DDR4 ECC RAM for maximum reliability.</p><div class="feature-tag">Global Locations</div></div>
+      <div class="plan-card" data-aos="fade-up" data-aos-delay="100"><i class="fas fa-shield-alt" style="font-size: 3rem; color:#a855f7;"></i><h3 class="plan-name">DDoS Protected</h3><p>Automatic mitigation, 24/7 network security monitoring.</p><div class="feature-tag">Enterprise Security</div></div>
+      <div class="plan-card" data-aos="fade-up" data-aos-delay="200"><i class="fas fa-headset" style="font-size: 3rem; color:#10b981;"></i><h3 class="plan-name">24/7 Support</h3><p>Discord & Ticket System — Instant human response.</p><div class="feature-tag">Friendly Support</div></div>
+      <div class="plan-card" data-aos="fade-up" data-aos-delay="300"><i class="fas fa-globe" style="font-size: 3rem; color:#fbbf24;"></i><h3 class="plan-name">Global Network</h3><p>India, Germany, Singapore, USA, UK & more locations.</p><div class="feature-tag">Ultra-Low Latency</div></div>
+    </div></div>
+  </div>
+
+  <!-- VPS PAGE -->
+  <div id="vps-page" class="page"><div class="container"><h2 class="section-title"><i class="fas fa-server"></i> VPS Hosting — Global Locations</h2><p class="section-subtitle">Intel E5 v4 • NVMe SSD • 99.99% Uptime • India/Germany/Singapore</p><div id="vps-plans" class="cards-grid"></div></div></div>
+
+  <!-- MINECRAFT PAGE -->
+  <div id="minecraft-page" class="page"><div class="container"><h2 class="section-title"><i class="fas fa-cube"></i> Minecraft Hosting — Global</h2><p class="section-subtitle">🎮 24/7 Online • Zero Data Loss • DDoS Protected • Instant Activation</p><div id="mc-plans" class="cards-grid"></div></div></div>
+
+  <!-- DEDICATED PAGE -->
+  <div id="dedicated-page" class="page"><div class="container"><h2 class="section-title"><i class="fas fa-database"></i> Dedicated Servers (VDS)</h2><p class="section-subtitle">Bare-metal performance • Full Root Access • Choose Your Location</p><div id="dedicated-plans" class="cards-grid"></div></div></div>
+
+  <!-- BOT HOSTING PAGE -->
+  <div id="bot-page" class="page"><div class="container"><h2 class="section-title"><i class="fas fa-robot"></i> Bot Hosting — Coming Soon</h2><p class="section-subtitle">Discord • Telegram • Custom Bots • 24/7 Uptime</p><div class="cards-grid"><div class="plan-card"><i class="fas fa-robot" style="font-size: 3rem;"></i><h3>🚀 Launching Soon</h3><p>High-performance bot hosting with auto-restart, API access, and global presence. Join our Discord for early access!</p><button class="btn-buy" onclick="window.open('https://discord.gg/TYhDwmp9xq','_blank')">Get Notified → Discord</button></div></div></div></div>
+
+  <!-- ADMIN PANEL -->
+  <div id="admin-page" class="page">
+    <div class="container">
+      <div id="adminAuthSection" style="max-width: 500px; margin: 2rem auto; background: linear-gradient(135deg,#11161f,#0d1117); padding: 2.5rem; border-radius: 2rem;">
+        <h2 style="text-align:center;">Admin Login</h2>
+        <input type="email" id="adminEmail" placeholder="Admin Email" style="width:100%; padding:14px; margin:12px 0; background:#1a1f2e; border:1px solid #2d3748; border-radius:12px; color:white;">
+        <input type="password" id="adminPassword" placeholder="Password" style="width:100%; padding:14px; margin:12px 0; background:#1a1f2e; border:1px solid #2d3748; border-radius:12px; color:white;">
+        <button id="adminLoginBtn" class="btn-primary" style="width:100%">Login to Admin Panel</button>
+        <p id="adminError" style="color:#ef4444; margin-top:15px;"></p>
+      </div>
+      <div id="adminPanelContent" style="display:none;">
+        <div class="admin-panel">
+          <h2><i class="fas fa-user-shield"></i> Admin Control — Manage All Plans</h2>
+          <div class="form-row">
+            <div class="form-field"><select id="adminCategory"><option value="vps">VPS Hosting</option><option value="minecraft">Minecraft Hosting</option><option value="dedicated">Dedicated (VDS)</option></select></div>
+            <div class="form-field"><input type="text" id="adminPlanName" placeholder="Plan Name"></div>
+            <div class="form-field"><input type="number" id="adminPlanPriceINR" placeholder="Price (INR)" step="1"></div>
+            <div class="form-field"><input type="text" id="adminPlanSpecs" placeholder="Specs (RAM/CPU/Disk)"></div>
+          </div>
+          <button id="addPlanBtn" class="btn-primary"><i class="fas fa-plus"></i> Add Plan</button>
+          <button id="resetDefaultsBtn" class="btn-outline" style="margin-left:10px;"><i class="fas fa-undo"></i> Reset Defaults</button>
+        </div>
+        <h3>📋 Current Plans (Edit/Delete)</h3>
+        <div id="adminPlansList" class="cards-grid"></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="social-icons">
+    <a href="https://discord.gg/TYhDwmp9xq" target="_blank"><i class="fab fa-discord"></i></a>
+    <a href="#"><i class="fab fa-github"></i></a>
+    <a href="#"><i class="fab fa-twitter"></i></a>
+  </div>
+  <p style="margin: 1rem 0;"><i class="fas fa-map-marker-alt"></i> Locations: India • Germany • Singapore • USA • UK • More Coming</p>
+  <p>© 2025 Lazy Cloud — Click "Buy Now" to order via Discord</p>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 800, once: true });
+
+  // Complete Plans Data with Global Locations
+  let plansData = {
+    vps: [
+      { id: "vps1", name: "🚀 Basic", priceINR: 250, priceUSD: 2.5, specs: "⚡ 2 GB DDR4 ECC RAM<br>🎯 1 vCore (Intel E5 v4)<br>💾 30 GB NVMe SSD<br>🌐 1 TB Bandwidth<br>📍 India/Germany/Singapore" },
+      { id: "vps2", name: "⚡ Standard", priceINR: 300, priceUSD: 3, specs: "⚡ 4 GB DDR4 ECC RAM<br>🎯 2 vCore CPU<br>💾 30 GB NVMe SSD<br>🌐 2 TB Bandwidth<br>📍 Choose Location" },
+      { id: "vps3", name: "🔥 Advanced", priceINR: 380, priceUSD: 3.8, specs: "⚡ 8 GB DDR4 ECC RAM<br>🎯 3 vCore CPU<br>💾 50 GB NVMe SSD<br>🌐 3 TB Bandwidth<br>📍 Global CDN" },
+      { id: "vps4", name: "💎 Pro", priceINR: 550, priceUSD: 5.5, specs: "⚡ 16 GB DDR4 ECC RAM<br>🎯 4 vCore CPU<br>💾 100 GB NVMe SSD<br>🌐 5 TB Bandwidth<br>📍 Priority Routing" },
+      { id: "vps5", name: "👑 Ultra", priceINR: 800, priceUSD: 8, specs: "⚡ 32 GB DDR4 ECC RAM<br>🎯 8 vCore CPU<br>💾 150 GB NVMe SSD<br>🌐 8 TB Bandwidth<br>📍 Dedicated IP" },
+      { id: "vps6", name: "🙏 God", priceINR: 1400, priceUSD: 14, specs: "⚡ 64 GB DDR4 ECC RAM<br>🎯 12 vCore CPU<br>💾 200 GB NVMe SSD<br>🌐 10 TB Bandwidth<br>📍 Unlimited Everything" }
+    ],
+    minecraft: [
+      { id: "mc1", name: "🌿 Starter", priceINR: 50, priceUSD: 0.6, specs: "🎮 2 GB DDR4 ECC<br>⚡ 100% CPU Power<br>💾 10 GB NVMe SSD<br>📍 India Low-Latency<br>🛡️ DDoS Protection" },
+      { id: "mc2", name: "⚡ Performance", priceINR: 100, priceUSD: 1.2, specs: "🎮 4 GB DDR4 ECC<br>⚡ 150% CPU Power<br>💾 15 GB NVMe SSD<br>📍 Germany/India<br>🎨 Modpack Support" },
+      { id: "mc3", name: "🚀 Ultra Boost", priceINR: 150, priceUSD: 1.8, specs: "🎮 6 GB DDR4 ECC<br>⚡ 200% CPU Power<br>💾 20 GB NVMe SSD<br>📍 Singapore/Asia<br>🌐 Free Subdomain" },
+      { id: "mc4", name: "💎 Pro Max", priceINR: 200, priceUSD: 2.4, specs: "🎮 8 GB DDR4 ECC<br>⚡ 250% CPU Power<br>💾 30 GB NVMe SSD<br>📍 Global Locations<br>👑 Priority Queue" },
+      { id: "mc5", name: "🏢 Enterprise", priceINR: 300, priceUSD: 3.6, specs: "🎮 12 GB DDR4 ECC<br>⚡ 300% CPU Power<br>💾 40 GB NVMe SSD<br>📍 Any Location<br>📊 Advanced Analytics" },
+      { id: "mc6", name: "🐉 Titan", priceINR: 400, priceUSD: 4.8, specs: "🎮 16 GB DDR4 ECC<br>⚡ 400% CPU Power<br>💾 50 GB NVMe SSD<br>📍 Global Anycast<br>👥 24/7 Manager" },
+      { id: "mc7", name: "👑 VIP", priceINR: 700, priceUSD: 8.4, specs: "🎮 32 GB DDR4 ECC<br>⚡ 600% CPU Power<br>💾 100 GB NVMe SSD<br>📍 Premium Network<br>🌟 WhiteGlove Support" },
+      { id: "mc8", name: "🙏 GOD", priceINR: 1000, priceUSD: 12, specs: "🎮 64 GB DDR4 ECC<br>⚡ 1000% CPU Power<br>💾 150 GB NVMe SSD<br>📍 Global Priority<br>✨ Unlimited Everything" }
+    ],
+    dedicated: [
+      { id: "ded1", name: "💪 VDS Core", priceINR: 600, priceUSD: 7.2, specs: "🖥️ 16 GB DDR4 ECC RAM<br>💾 100 GB NVMe SSD<br>🎯 6 Cores<br>📍 India/Germany/Singapore" },
+      { id: "ded2", name: "🔥 VDS Performance", priceINR: 1200, priceUSD: 14.4, specs: "🖥️ 32 GB DDR4 ECC RAM<br>💾 200 GB NVMe SSD<br>🎯 10 Cores<br>📍 Any Global Location" },
+      { id: "ded3", name: "👑 VDS Enterprise", priceINR: 2500, priceUSD: 30, specs: "🖥️ 64 GB DDR4 ECC RAM<br>💾 400 GB NVMe SSD<br>🎯 16 Cores<br>📍 Premium Global Network" }
+    ]
+  };
+
+  function persistData() { localStorage.setItem('lazycloud_full_plans', JSON.stringify(plansData)); }
+  function loadData() {
+    const stored = localStorage.getItem('lazycloud_full_plans');
+    if (stored) { try { const p = JSON.parse(stored); if (p.vps && p.minecraft && p.dedicated) plansData = p; } catch(e){} }
+  }
+
+  function renderAllPlans() {
+    renderCategory('vps', 'vps-plans');
+    renderCategory('minecraft', 'mc-plans');
+    renderCategory('dedicated', 'dedicated-plans');
+    if (document.getElementById('adminPanelContent') && document.getElementById('adminPanelContent').style.display === 'block') renderAdminList();
+  }
+
+  function renderCategory(cat, containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const plans = plansData[cat] || [];
+    container.innerHTML = plans.map(plan => `
+      <div class="plan-card" data-aos="fade-up">
+        <div class="plan-icon"><i class="fas ${cat === 'vps' ? 'fa-server' : (cat === 'minecraft' ? 'fa-cube' : 'fa-database')}" style="font-size: 2.8rem; background: linear-gradient(135deg,#60a5fa,#c084fc); -webkit-background-clip: text; background-clip: text; color: transparent;"></i></div>
+        <div class="plan-name">${escapeHtml(plan.name)}</div>
+        <div class="price-rupee">₹${plan.priceINR} <span class="price-dollar">/ $${plan.priceUSD} USD</span></div>
+        <div class="plan-specs">${plan.specs}</div>
+        <div class="badge-location"><i class="fas fa-map-marker-alt"></i> Global Locations: India • Germany • Singapore</div>
+        <button class="btn-buy buy-now-btn" data-plan="${escapeHtml(plan.name)}" style="margin-top: 20px;">🚀 Buy Now → Discord</button>
+      </div>
+    `).join('');
+    document.querySelectorAll('.buy-now-btn').forEach(btn => {
+      btn.addEventListener('click', () => { window.open('https://discord.gg/TYhDwmp9xq', '_blank'); });
+    });
+  }
+
+  function renderAdminList() {
+    const container = document.getElementById('adminPlansList');
+    if (!container) return;
+    let all = [];
+    for (let cat in plansData) {
+      plansData[cat].forEach(p => all.push({ ...p, category: cat }));
+    }
+    container.innerHTML = all.map(plan => `
+      <div class="plan-card">
+        <h3>${escapeHtml(plan.name)}</h3>
+        <p class="price-rupee" style="font-size:1.5rem;">₹${plan.priceINR} / $${plan.priceUSD}</p>
+        <p><small>${plan.specs.replace(/<br>/g, ', ')}</small></p>
+        <div class="badge-location">${plan.category.toUpperCase()}</div>
+        <div style="display:flex; gap:10px; margin-top:15px;">
+          <button class="admin-edit" data-cat="${plan.category}" data-id="${plan.id}" style="background:#3b82f6; padding:8px 16px; border-radius:30px;">✏️ Edit</button>
+          <button class="admin-delete" data-cat="${plan.category}" data-id="${plan.id}" style="background:#dc2626; padding:8px 16px; border-radius:30px;">🗑️ Delete</button>
+        </div>
+      </div>
+    `).join('');
+    document.querySelectorAll('.admin-edit').forEach(btn => {
+      btn.addEventListener('click', () => { editPlan(btn.getAttribute('data-cat'), btn.getAttribute('data-id')); });
+    });
+    document.querySelectorAll('.admin-delete').forEach(btn => {
+      btn.addEventListener('click', () => { if(confirm("Delete plan?")) deletePlan(btn.getAttribute('data-cat'), btn.getAttribute('data-id')); });
+    });
+  }
+
+  function editPlan(cat, id) {
+    const plan = plansData[cat].find(p => p.id === id);
+    if (!plan) return;
+    let newName = prompt("Plan name:", plan.name); if(newName && newName.trim()) plan.name = newName.trim();
+    let newINR = prompt("Price (INR):", plan.priceINR); if(newINR && !isNaN(parseInt(newINR))) { plan.priceINR = parseInt(newINR); plan.priceUSD = (plan.priceINR / 83).toFixed(2); }
+    let newSpecs = prompt("Specs (use <br> for line break):", plan.specs); if(newSpecs !== null) plan.specs = newSpecs;
+    persistData(); renderAllPlans();
+  }
+  function deletePlan(cat, id) { plansData[cat] = plansData[cat].filter(p => p.id !== id); persistData(); renderAllPlans(); }
+  function addPlan(cat, name, inr, specs) {
+    if(!name.trim()) { alert("Plan name needed"); return false; }
+    if(isNaN(inr) || inr<=0) { alert("Valid price needed"); return false; }
+    const usd = (inr / 83).toFixed(2);
+    const newId = cat + "_" + Date.now();
+    plansData[cat].push({ id: newId, name: name.trim(), priceINR: parseInt(inr), priceUSD: parseFloat(usd), specs: specs.trim() || "Custom Configuration" });
+    persistData(); renderAllPlans(); return true;
+  }
+  function resetDefaults() {
+    if(confirm("Reset all plans to default Lazy Cloud plans?")) {
+      plansData = {
+        vps: [
+          { id: "vps1", name: "🚀 Basic", priceINR: 250, priceUSD: 2.5, specs: "⚡ 2 GB DDR4 ECC RAM<br>🎯 1 vCore (Intel E5 v4)<br>💾 30 GB NVMe SSD<br>🌐 1 TB Bandwidth<br>📍 India/Germany/Singapore" },
+          { id: "vps2", name: "⚡ Standard", priceINR: 300, priceUSD: 3, specs: "⚡ 4 GB DDR4 ECC RAM<br>🎯 2 vCore CPU<br>💾 30 GB NVMe SSD<br>🌐 2 TB Bandwidth<br>📍 Choose Location" },
+          { id: "vps3", name: "🔥 Advanced", priceINR: 380, priceUSD: 3.8, specs: "⚡ 8 GB DDR4 ECC RAM<br>🎯 3 vCore CPU<br>💾 50 GB NVMe SSD<br>🌐 3 TB Bandwidth<br>📍 Global CDN" },
+          { id: "vps4", name: "💎 Pro", priceINR: 550, priceUSD: 5.5, specs: "⚡ 16 GB DDR4 ECC RAM<br>🎯 4 vCore CPU<br>💾 100 GB NVMe SSD<br>🌐 5 TB Bandwidth<br>📍 Priority Routing" },
+          { id: "vps5", name: "👑 Ultra", priceINR: 800, priceUSD: 8, specs: "⚡ 32 GB DDR4 ECC RAM<br>🎯 8 vCore CPU<br>💾 150 GB NVMe SSD<br>🌐 8 TB Bandwidth<br>📍 Dedicated IP" },
+          { id: "vps6", name: "🙏 God", priceINR: 1400, priceUSD: 14, specs: "⚡ 64 GB DDR4 ECC RAM<br>🎯 12 vCore CPU<br>💾 200 GB NVMe SSD<br>🌐 10 TB Bandwidth<br>📍 Unlimited Everything" }
+        ],
+        minecraft: [
+          { id: "mc1", name: "🌿 Starter", priceINR: 50, priceUSD: 0.6, specs: "🎮 2 GB DDR4 ECC<br>⚡ 100% CPU Power<br>💾 10 GB NVMe SSD<br>📍 India Low-Latency<br>🛡️ DDoS Protection" },
+          { id: "mc2", name: "⚡ Performance", priceINR: 100, priceUSD: 1.2, specs: "🎮 4 GB DDR4 ECC<br>⚡ 150% CPU Power<br>💾 15 GB NVMe SSD<br>📍 Germany/India<br>🎨 Modpack Support" },
+          { id: "mc3", name: "🚀 Ultra Boost", priceINR: 150, priceUSD: 1.8, specs: "🎮 6 GB DDR4 ECC<br>⚡ 200% CPU Power<br>💾 20 GB NVMe SSD<br>📍 Singapore/Asia<br>🌐 Free Subdomain" },
+          { id: "mc4", name: "💎 Pro Max", priceINR: 200, priceUSD: 2.4, specs: "🎮 8 GB DDR4 ECC<br>⚡ 250% CPU Power<br>💾 30 GB NVMe SSD<br>📍 Global Locations<br>👑 Priority Queue" },
+          { id: "mc5", name: "🏢 Enterprise", priceINR: 300, priceUSD: 3.6, specs: "🎮 12 GB DDR4 ECC<br>⚡ 300% CPU Power<br>💾 40 GB NVMe SSD<br>📍 Any Location<br>📊 Advanced Analytics" },
+          { id: "mc6", name: "🐉 Titan", priceINR: 400, priceUSD: 4.8, specs: "🎮 16 GB DDR4 ECC<br>⚡ 400% CPU Power<br>💾 50 GB NVMe SSD<br>📍 Global Anycast<br>👥 24/7 Manager" },
+          { id: "mc7", name: "👑 VIP", priceINR: 700, priceUSD: 8.4, specs: "🎮 32 GB DDR4 ECC<br>⚡ 600% CPU Power<br>💾 100 GB NVMe SSD<br>📍 Premium Network<br>🌟 WhiteGlove Support" },
+          { id: "mc8", name: "🙏 GOD", priceINR: 1000, priceUSD: 12, specs: "🎮 64 GB DDR4 ECC<br>⚡ 1000% CPU Power<br>💾 150 GB NVMe SSD<br>📍 Global Priority<br>✨ Unlimited Everything" }
+        ],
+        dedicated: [
+          { id: "ded1", name: "💪 VDS Core", priceINR: 600, priceUSD: 7.2, specs: "🖥️ 16 GB DDR4 ECC RAM<br>💾 100 GB NVMe SSD<br>🎯 6 Cores<br>📍 India/Germany/Singapore" },
+          { id: "ded2", name: "🔥 VDS Performance", priceINR: 1200, priceUSD: 14.4, specs: "🖥️ 32 GB DDR4 ECC RAM<br>💾 200 GB NVMe SSD<br>🎯 10 Cores<br>📍 Any Global Location" },
+          { id: "ded3", name: "👑 VDS Enterprise", priceINR: 2500, priceUSD: 30, specs: "🖥️ 64 GB DDR4 ECC RAM<br>💾 400 GB NVMe SSD<br>🎯 16 Cores<br>📍 Premium Global Network" }
+        ]
+      };
+      persistData(); renderAllPlans();
+    }
+  }
+
+  function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+
+  // Page Routing
+  const pages = ['home', 'vps', 'minecraft', 'dedicated', 'bot', 'admin'];
+  function showPage(pageId) {
+    pages.forEach(p => { const el = document.getElementById(`${p}-page`); if(el) el.classList.remove('active-page'); });
+    const active = document.getElementById(`${pageId}-page`);
+    if (active) active.classList.add('active-page');
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      const lp = link.getAttribute('data-page');
+      if (lp === pageId) link.classList.add('active'); else link.classList.remove('active');
+    });
+    if (pageId === 'admin') checkAdminAuth();
+  }
+
+  function checkAdminAuth() {
+    const isLogged = sessionStorage.getItem('lazy_admin_logged');
+    if (isLogged === 'true') {
+      document.getElementById('adminAuthSection').style.display = 'none';
+      document.getElementById('adminPanelContent').style.display = 'block';
+      renderAdminList();
+    } else {
+      document.getElementById('adminAuthSection').style.display = 'block';
+      document.getElementById('adminPanelContent').style.display = 'none';
+    }
+  }
+
+  document.getElementById('adminLoginBtn')?.addEventListener('click', () => {
+    const email = document.getElementById('adminEmail').value;
+    const pass = document.getElementById('adminPassword').value;
+    if (email === 'akshitkanswal111@gmail.com' && pass === 'Welcome@342') {
+      sessionStorage.setItem('lazy_admin_logged', 'true');
+      document.getElementById('adminError').innerText = '';
+      checkAdminAuth();
+      renderAdminList();
+    } else {
+      document.getElementById('adminError').innerText = 'Invalid credentials. Access denied.';
+    }
+  });
+
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', (e) => { e.preventDefault(); const page = link.getAttribute('data-page'); if(page) showPage(page); document.getElementById('navLinks')?.classList.remove('active'); });
+  });
+  document.getElementById('hamburger')?.addEventListener('click', () => { document.getElementById('navLinks')?.classList.toggle('active'); });
+  document.getElementById('exploreVps')?.addEventListener('click', () => showPage('vps'));
+  document.getElementById('exploreMc')?.addEventListener('click', () => showPage('minecraft'));
+  document.getElementById('addPlanBtn')?.addEventListener('click', () => {
+    const cat = document.getElementById('adminCategory').value;
+    const name = document.getElementById('adminPlanName').value;
+    const inr = document.getElementById('adminPlanPriceINR').value;
+    const specs = document.getElementById('adminPlanSpecs').value;
+    if(addPlan(cat, name, inr, specs)) {
+      document.getElementById('adminPlanName').value = '';
+      document.getElementById('adminPlanPriceINR').value = '';
+      document.getElementById('adminPlanSpecs').value = '';
+    }
+  });
+  document.getElementById('resetDefaultsBtn')?.addEventListener('click', resetDefaults);
+
+  loadData(); renderAllPlans(); showPage('home');
+</script>
+</body>
+</html>
